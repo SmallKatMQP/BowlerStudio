@@ -32,13 +32,12 @@ public class JavaIKModel implements DhInverseSolver {
 			double z = target.getZ();
 
 			double ang = 0;
+			System.out.println(target.getRotation().toString());
 
-			System.out.println(target.getRotationMatrixArray().toString());
-
-			double l1_d = links.get(0).getD();
-			double l2_d = links.get(1).getD();
-			double l3_d = links.get(2).getD();
-			double l4_d = links.get(3).getD();
+			double l1_d = links.get(0).getR();
+			double l2_d = Math.abs(links.get(1).getR());
+			double l3_d = Math.abs(links.get(2).getR());
+			double l4_d = links.get(3).getR();
 
 			double theta1 = Math.atan(y / Math.abs(z));
 
