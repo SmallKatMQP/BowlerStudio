@@ -26,24 +26,49 @@ public class JavaIKModel implements DhInverseSolver {
 
             int linkNum = jointSpaceVector.length;
 
-            double x = target.getZ();
+            double L1x = 165;
+            double L1y = -38.2605;
+            double L1z = 0;
+            
+            
+            double x = target.getX();
             double y = target.getY();
-            double z = target.getX();
+            double z = target.getZ();
+            
+//            double x = 165;
+//            double y = -40;
+//            double z = -150;
+            
+            //calculate link vector
+//            x = (0-L1x) + x;
+//            y = (0-L1y) + y;
+//            z = (0-L1z) + z;
 
             System.out.println("x: " + x);
             System.out.println("y: " + y);
             System.out.println("z: " + z);
 
-            double ang = 0;
+            double ang = 0.5236;
 
 
             //System.out.println(target.getRotation().toString());
 
-            double l1_d = links.get(0).getR();
-            double l2_d = links.get(1).getR();
-            double l3_d = links.get(2).getR();
-            double l4_d = links.get(3).getR();
+            //double l1_d = links.get(0).getR();
+            //double l2_d = links.get(1).getR();
+            //double l3_d = links.get(2).getR();
+            //double l4_d = links.get(3).getR();
+            
+            double l1_d = 0;
+            double l2_d = 92;
+            double l3_d = 75;
+            double l4_d = 71.03;
 
+            System.out.println("L1: " + l1_d);
+            System.out.println("L2: " + l2_d);
+            System.out.println("L3: " + l3_d);
+            System.out.println("L4: " + l4_d);
+            
+            
             double[] inv = new double[linkNum];
 
             double theta1 = Math.atan(y / Math.abs(z));
@@ -54,7 +79,7 @@ public class JavaIKModel implements DhInverseSolver {
             double Px = x1 - l4_d * Math.sin(ang);
             double Py = y1 - l4_d * Math.cos(ang);
             // Make below negative to switch to other angle
-            double theta3_1 = Math.acos(((Math.pow(Px, 2) + Math.pow(Py,2)) - (Math.pow(l2_d,2) + Math.pow(l3_d, 2))) / (2 * l2_d * l3_d));
+            double theta3_1 = -1* (Math.acos(((Math.pow(Px, 2) + Math.pow(Py,2)) - (Math.pow(l2_d,2) + Math.pow(l3_d, 2))) / (2 * l2_d * l3_d)));
             double theta3_2 = theta3_1 * -1;
 
             double B = Math.atan(Py / Px);
