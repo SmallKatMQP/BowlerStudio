@@ -31,22 +31,14 @@ public class JavaIKModel implements DhInverseSolver {
             double L1z = 0;
             
             
-            double x = target.getX();
-            double y = target.getY();
             double z = target.getZ();
-            
-//            double x = 165;
-//            double y = -40;
-//            double z = -150;
-            
-            //calculate link vector
-//            x = (0-L1x) + x;
-//            y = (0-L1y) + y;
-//            z = (0-L1z) + z;
+            double y = target.getY();
+            double x = target.getX();
+           
 
-            System.out.println("x: " + x);
-            System.out.println("y: " + y);
             System.out.println("z: " + z);
+            System.out.println("y: " + y);
+            System.out.println("x: " + x);
 
             double ang = 0.5236;
 
@@ -71,11 +63,11 @@ public class JavaIKModel implements DhInverseSolver {
             
             double[] inv = new double[linkNum];
 
-            double theta1 = Math.atan(y / Math.abs(z));
+            double theta1 = Math.atan(y / (x));
 
-            double r1 = Math.sqrt(Math.pow(z, 2) + Math.pow(y,2));
+            double r1 = Math.sqrt(Math.pow(x, 2) + Math.pow(y,2));
             double x1 = r1;
-            double y1 = x;
+            double y1 = z;
             double Px = x1 - l4_d * Math.sin(ang);
             double Py = y1 - l4_d * Math.cos(ang);
             // Make below negative to switch to other angle
