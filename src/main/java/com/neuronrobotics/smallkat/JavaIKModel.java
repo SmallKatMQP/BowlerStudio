@@ -12,6 +12,7 @@ import com.neuronrobotics.sdk.addons.kinematics.DhInverseSolver;
 import com.neuronrobotics.sdk.addons.kinematics.math.TransformNR;
 import com.neuronrobotics.sdk.common.Log;
 import Jama.Matrix;
+import eu.mihosoft.vrl.v3d.Transform;
 
 public class JavaIKModel implements DhInverseSolver {
 
@@ -31,10 +32,16 @@ public class JavaIKModel implements DhInverseSolver {
             double L1z = 0;
             
             
+//            double z = target.getZ();
+//            double y = -1*(target.getX());
+//            double x = target.getY();
             double z = target.getZ();
             double y = target.getY();
             double x = target.getX();
-           
+            
+//            z = -z;
+//            y = -y;
+//            x = -x;
 
             System.out.println("z: " + z);
             System.out.println("y: " + y);
@@ -63,9 +70,29 @@ public class JavaIKModel implements DhInverseSolver {
             
             double[] inv = new double[linkNum];
 
-            double theta1 = Math.atan(y / (x));
+            double theta1 = Math.atan2(y , x);
+            double theta1Degrees = Math.toDegrees(theta1);
+            System.out.println("The first link angle = "+theta1Degrees);
 
-            double r1 = Math.sqrt(Math.pow(x, 2) + Math.pow(y,2));
+            double r1 = Math.sqrt(Math.pow(x, 2) + Math.pow(y,2)+Math.pow(z, 2));
+            System.out.println("Limb total vector length = "+r1);
+            double footTiltAngle = Math.toDegrees(Math.atan2(z, y));
+            System.out.println("Tilting the foot angle " +footTiltAngle );
+            Transform wristcenter= new Transform()
+            						.movex(-l4_d)
+            						.roty(footTiltAngle) // this should the  the foot angle
+            						.rotz(-theta1Degrees)
+            						.movex(x)
+            						.movey(y)
+            						.movez(z);
+            
+            
+            double wristCenterX = wristcenter.getX();
+            double wristCenterY=wristcenter.getY();
+            double wristCenterZ=wristcenter.getZ();
+            
+            System.out.println("Wrist center = x "+wristCenterX+" y "+wristCenterY+" z "+wristCenterZ);
+            
             double x1 = r1;
             double y1 = z;
             double Px = x1 - l4_d * Math.sin(ang);
@@ -96,9 +123,9 @@ public class JavaIKModel implements DhInverseSolver {
 			
             //inv[0] = theta1; inv[1] = theta2_1; inv[2] = theta3_1; inv[3] = theta4_1;
             inv[0] = Math.toDegrees(theta1);
-            inv[1] = Math.toDegrees(theta2_1);
-            inv[2] = Math.toDegrees(theta3_1);
-            inv[3] = Math.toDegrees(theta4_1);
+            inv[1] = Math.toDegrees(theta2_2);
+            inv[2] = Math.toDegrees(theta3_2);
+            inv[3] = Math.toDegrees(theta4_2);
 
             System.out.println("\r\n\r\nJoint Vector = " + inv + "\r\n\r\n");
 
