@@ -104,8 +104,8 @@ public class JavaIKModel implements DhInverseSolver {
     		
             double ang1 = (Math.PI-(-theta2_1+theta3_2));
             double theta4_1 = (((Math.PI - ang1) + Oanginv)) - Math.PI;
-            double ang2 = -(Math.PI-(theta2_2+(theta3_2 + Math.PI)));
-            double theta4_2 = (Math.PI+ang2-Oanginv);
+            double ang2 = (theta2_2+theta3_2);
+            double theta4_2 = ((Math.PI-ang2)+Oanginv);
             
             
             System.out.println(theta_1);
